@@ -6,10 +6,11 @@ from app.schemas import UserCreate
 from config.app import settings
 from core.DbConnect import SessionLocal, engine, Base
 
+# create table
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
-
+# Get db session
 def get_db():
     db = SessionLocal()
     try:
@@ -33,6 +34,13 @@ async def root(db: Session = Depends(get_db)):
     user.email = "tmz@zyt.com"
     user.password = "123456"
     return create_user(db=db, user=user)
+
+def modelClone(db: Session = Depends(get_db)):
+    user = UserCreate
+    user.email = "tmz@zyt.com"
+    user.password = "<PASSWORD>"
+
+
 
 
 if __name__ == "__main__":

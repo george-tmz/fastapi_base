@@ -2,10 +2,11 @@ from pydantic_settings import BaseSettings
 
 
 class Db(BaseSettings):
-    DB_HOST: str = ''
-    DB_PORT: int = 123
-    DB_USER: str = ''
-    DB_PASSWORD: str = ''
+    DB_HOST: str = '183.66.79.98'
+    DB_PORT: str = '3308'
+    DB_USER: str = 'root'
+    DB_PASSWORD: str = 'XgjG4rrLJ3'
+    DB_NAME: str = 'v3_szr'
 
 
 class Redis(BaseSettings):
