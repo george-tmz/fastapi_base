@@ -18,29 +18,12 @@ def get_db():
     finally:
         db.close()
 
-
-def create_user(db: Session, user: UserCreate):
-    fake_hashed_password = user.password + "notreallyhased"
-    db_user = User(email=user.email, hashed_password=fake_hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
-
 @app.get("/")
 async def root(db: Session = Depends(get_db)):
     user = UserCreate
     user.email = "tmz@zyt.com"
     user.password = "123456"
     return create_user(db=db, user=user)
-
-def modelClone(db: Session = Depends(get_db)):
-    user = UserCreate
-    user.email = "tmz@zyt.com"
-    user.password = "<PASSWORD>"
-
-
 
 
 if __name__ == "__main__":
