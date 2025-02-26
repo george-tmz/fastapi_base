@@ -1,14 +1,12 @@
 import uvicorn
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
-from app.models.Users import User
-from app.schemas import UserCreate
+from fastapi import FastAPI
 from config.app import settings
 from core.DbConnect import SessionLocal, engine, Base
 
 # create table
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
 
 # Get db session
 def get_db():
@@ -18,12 +16,10 @@ def get_db():
     finally:
         db.close()
 
+
 @app.get("/")
-async def root(db: Session = Depends(get_db)):
-    user = UserCreate
-    user.email = "tmz@zyt.com"
-    user.password = "123456"
-    return create_user(db=db, user=user)
+async def root():
+    return "Welcome to here!"
 
 
 if __name__ == "__main__":
