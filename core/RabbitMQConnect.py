@@ -3,14 +3,19 @@ import aio_pika
 
 
 class RabbitMQConnect:
-    def __init__(self, url: str):
-        self.url = url
+    def __init__(self):
         self.connection = None
         self.channel = None
 
     async def connect(self):
         if self.connection is None or self.connection.is_closed:
-            self.connection = await aio_pika.connect_robust(self.url)
+            self.connection = await aio_pika.connect_robust(
+                host=RabbitMQ.RABBITMQ_HOST,
+                port=RabbitMQ.RABBITMQ_PORT,
+                login=RabbitMQ.RABBITMQ_USER,
+                password=RabbitMQ.RABBITMQ_PASSWORD,
+                virtualhost="bthost"
+            )
             self.channel = await self.connection.channel()
 
     async def close(self):
@@ -24,6 +29,4 @@ class RabbitMQConnect:
         )
 
 
-rabbitmq = RabbitMQConnect(
-    url=f"amqp://{RabbitMQ.RABBITMQ_USER}:{RabbitMQ.RABBITMQ_PASSWORD}@{RabbitMQ.RABBITMQ_HOST}:{RabbitMQ.RABBITMQ_PORT}"
-)
+rabbitmq = RabbitMQConnect()
