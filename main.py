@@ -5,6 +5,7 @@ from config.app import settings
 from core.DbConnect import SessionLocal, engine, Base
 from routers import model
 
+
 # create table
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
