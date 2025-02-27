@@ -24,3 +24,12 @@ async def create_model(data: ModelCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(model)
     return ResponseSuccess(data={"task_id": model.task_id, "status": model.status})
+
+@router.get("/model/{task_id}", response_model=ResponseBody)
+async def get_model(task_id: str, db: Session = Depends(get_db)):
+    model = db.query(Model).filter(Model.task_id == task_id).first()
+    return ResponseSuccess(data={"task_id": model.task_id, "status": model.status, "model_id": model.model_id, "finish_time": model.finish_at})
+
+
+
+
