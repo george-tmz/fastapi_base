@@ -4,7 +4,7 @@ from core.DbConnect import Base
 
 
 class Video(Base):
-    __tablename__ = 'videos'
+    __tablename__ = "videos"
     id = Column(Integer, primary_key=True)
     task_id = Column(String(64))
     source_audio_url = Column(String(255))

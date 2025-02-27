@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
 from app.models.Models import Model
 from app.schemas.ModelCreate import ModelCreate
 from app.schemas.response.ResponseBody import ResponseBody
@@ -18,18 +17,22 @@ async def create_model(data: ModelCreate, db: Session = Depends(get_db)):
         source_video_url=data.video_url,
         callback_url=data.callback_url,
         status=1,
-        host_ip=get_current_ip()
+        host_ip=get_current_ip(),
     )
     db.add(model)
     db.commit()
     db.refresh(model)
     return ResponseSuccess(data={"task_id": model.task_id, "status": model.status})
 
+
 @router.get("/model/{task_id}", response_model=ResponseBody)
 async def get_model(task_id: str, db: Session = Depends(get_db)):
     model = db.query(Model).filter(Model.task_id == task_id).first()
-    return ResponseSuccess(data={"task_id": model.task_id, "status": model.status, "model_id": model.model_id, "finish_time": model.finish_at})
-
-
-
-
+    return ResponseSuccess(
+        data={
+            "task_id": model.task_id,
+            "status": model.status,
+            "model_id": model.model_id,
+            "finish_time": model.finish_at,
+        }
+    )

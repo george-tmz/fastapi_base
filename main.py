@@ -1,6 +1,5 @@
 import uvicorn
 from fastapi import FastAPI
-
 from config.app import settings
 from core.DbConnect import SessionLocal, engine, Base
 from routers import model

@@ -3,7 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from config.database import Db
 
-DATABASE_URI = 'mysql+pymysql://' + Db.DB_USER + ':' + Db.DB_PASSWORD + '@' + Db.DB_HOST + ':' + Db.DB_PORT + '/' + Db.DB_NAME
+
+DATABASE_URI = f"mysql+pymysql://{Db.DB_USER}:{Db.DB_PASSWORD}@{Db.DB_HOST}:{Db.DB_PORT}/{Db.DB_NAME}"
 
 engine = create_engine(DATABASE_URI)
 
