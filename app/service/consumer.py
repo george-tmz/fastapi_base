@@ -1,12 +1,12 @@
-# app/consumer.py
-
 import aio_pika
 import asyncio
 from core.RabbitMQConnect import rabbitmq
 
+
 async def on_message(message: aio_pika.IncomingMessage):
     async with message.process():
         print(f"Received message: {message.body.decode()}")
+
 
 async def consume():
     await rabbitmq.connect()
